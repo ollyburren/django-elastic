@@ -1,4 +1,3 @@
-
 **D-I-L/master**
 
 .. image:: https://travis-ci.org/D-I-L/django-elastic.svg
@@ -16,12 +15,12 @@
 .. image:: https://coveralls.io/repos/D-I-L/django-elastic/badge.svg?branch=develop&service=github
   :target: https://coveralls.io/github/D-I-L/django-elastic?branch=develop
 
-======
-Elastic
-======
+==============
+django-elastic
+==============
 
 
-Search is a Django app to run Elastic search queries.
+django-elastic is a Django app to run Elastic search queries.
 
 Quick start
 -----------
@@ -30,22 +29,18 @@ Quick start
 
     pip install -e git://github.com/D-I-L/django-elastic.git#egg=elastic
 
-2. Tastypie is required::
-
-    pip install -e git+http://github.com/django-tastypie/django-tastypie#egg=tastypie
-
-3. If you need to start a Django project::
+2. If you need to start a Django project::
 
     django-admin startproject [project_name]
 
-4. Add "elastic" to your ``INSTALLED_APPS`` in ``settings.py``::
+3. Add "elastic" to your ``INSTALLED_APPS`` in ``settings.py``::
 
     INSTALLED_APPS = (
         ...
         'elastic',
     )
 
-5. Add the Elastic settings to the settings.py::
+4. Add the Elastic settings to the settings.py::
 
     # elastic search engine
     ELASTIC = {
@@ -61,7 +56,7 @@ Quick start
        }
     }
 
-6. Tests can be run as follows::
+5. Tests can be run as follows::
 
     ./manage.py test elastic.tests
 
