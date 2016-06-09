@@ -1,4 +1,5 @@
 from elastic.management.loaders.loader import DelimeterLoader, MappingProperties
+import re
 
 
 class BEDManager(DelimeterLoader):
@@ -9,7 +10,11 @@ class BEDManager(DelimeterLoader):
         idx_name = self.get_index_name(**options)
         idx_type = self._get_index_type(**options)
         f = self.open_file_to_load('indexBED', **options)
-        column_names = ["seqid", "start", "end", "name", "score"]
+        column_names = ["seqid", "start", "end", "name", "score", "strand",
+                        "thickStart", "thickEnd", "itemRgb", "blockCount", "blockSizes", "blockStarts"]
+        line = f.readline().decode("utf-8")
+        parts = re.split('\t', line)
+        column_names = column_names[:len(parts)]
         self.load(column_names, f, idx_name, idx_type)
 
     def _create_bed_mapping(self, **options):

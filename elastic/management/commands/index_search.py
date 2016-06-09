@@ -12,6 +12,7 @@ from elastic.management.loaders.gene_target import GeneTargetManager
 from elastic.management.loaders.gff import GFFManager
 from elastic.management.loaders.json import JsonManager
 from elastic.management.loaders.marker import MarkerManager, RsMerge
+from elastic.management.loaders.region import RegionManager
 
 
 # Get an instance of a logger
@@ -27,6 +28,8 @@ class Command(BaseCommand):
            "Options for genes:\n" \
            " --indexName [index name] --indexGene genenames.org.txt --org=human\n" \
            " --indexName [index name] --indexGeneGFF gene.gff --build GRCh38\n" \
+           "Options for study hits:\n" \
+           " --indexName [index name] --indexType [studies] --addStudyData [csv file] --study [study id]\n" \
            "Options for GFF/GTF:\n" \
            " --indexName [index name] --indexType [gff] --indexGFF file.gff [--isGTF]\n" \
            "Options for BED:\n" \
@@ -55,6 +58,14 @@ class Command(BaseCommand):
         make_option('--indexGeneGFF',
                     dest='indexGeneGFF',
                     help='GFF gene file used to update a gene index'),
+        ) + (
+        make_option('--addStudyData',
+                    dest='addStudyData',
+                    help='CSV file of GWAS data from study'),
+        ) + (
+        make_option('--study',
+                    dest='study_id',
+                    help='study id'),
         ) + (
         make_option('--org',
                     dest='org',
@@ -138,6 +149,10 @@ class Command(BaseCommand):
         elif options['indexGeneGFF']:
             gene = GeneManager()
             gene.update_gene(**options)
+
+        elif options['addStudyData']:
+            region = RegionManager()
+            region.add_study_data(**options)
 
         elif options['indexGTarget']:
             gt = GeneTargetManager()

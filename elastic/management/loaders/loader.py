@@ -1,13 +1,16 @@
 ''' Parent loaders to handle mapping and bulk loading. '''
 import gzip
 import json
-import requests
-import re
-from elastic.search import Search, ElasticSettings, Bulk
 import logging
-from elastic.management.loaders.mapping import MappingProperties
+import re
+
+import requests
+
 from elastic.management.loaders.analysis import Analyzer
 from elastic.management.loaders.exceptions import LoaderError
+from elastic.management.loaders.mapping import MappingProperties
+from elastic.search import Search, ElasticSettings, Bulk
+
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -112,6 +115,7 @@ class DelimeterLoader(Loader):
                 parts = re.split(delim, line)
                 if len(parts) != len(column_names):
                     logger.warn("WARNING: unexpected number of columns: ["+str(line_num+1)+'] '+line)
+                    line_num += 1
                     continue
 
                 idx_id = str(auto_num)

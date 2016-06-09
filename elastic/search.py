@@ -182,6 +182,10 @@ class Search:
         logger.debug("curl '" + self.elastic_url + '/' + self.url + "&pretty' -d '" + json.dumps(self.query) + "'")
         if response.status_code != 200:
             logger.warning("Error: elastic response 200:" + self.url)
+            json_err = json.dumps({"error": response.status_code,
+                                   "response": response.content.decode("utf-8"),
+                                   "url": self.url})
+            return json_err
         return response.json()
 
     def search(self, obj_document=ElasticSettings.get_document_factory()):
